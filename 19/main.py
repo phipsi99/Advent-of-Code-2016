@@ -1,17 +1,27 @@
-from pathlib import Path
 
 def do_main(debug_mode=False):
-    with open(Path('19/input.txt')) as file:
-        lines = [line.rstrip() for line in file]
+    no_elfs = 3018458
     
     if debug_mode:
-        with open(Path('19/test.txt')) as file:
-            lines = [line.rstrip() for line in file]
+        no_elfs = 5
 
-    point_sum = 0
+    elfs = [1] * no_elfs
+    index = 0
+    while elfs.count(no_elfs) != 1:
+        if elfs[index] == 0:
+            index = (index +1) %no_elfs
+            continue
+        
+        next_elf = (index + 1) % no_elfs
+        while elfs[next_elf] == 0:
+            next_elf = (next_elf + 1) % no_elfs
+        elfs[index] += elfs[next_elf]
+        elfs[next_elf] = 0
+        index = (index +1) %no_elfs
 
-    for line_index, line in enumerate(lines):
-        r = [int(i) for i in line.split(" ")]
+    print(elfs)
+        
+    
 
 if __name__ == '__main__':
     do_main(False)
