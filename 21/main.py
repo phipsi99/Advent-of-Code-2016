@@ -3,7 +3,8 @@ from pathlib import Path
 from random import shuffle
 import re
 
-def unscramble(lines, password):
+def unscramble(lines, orig):
+    password = orig[:]
     for line_index, line in enumerate(lines):
         if "swap position" in line:
             i1, i2 = [int(i) for i in re.findall(r"\d", line)]
@@ -62,11 +63,14 @@ def do_main(debug_mode=False):
     print("".join(unscramble(lines, password)))
 
     found_pw = ""
+    visited = set()
     orig = list("abcdefgh")
-    while found_pw != "fbgdceah":
-        shuffle(orig)
+    while "".join(found_pw) != "fbgdceah":
+        while tuple(orig) in visited:
+            shuffle(orig)
+        visited.add(tuple(orig))
         found_pw = unscramble(lines, orig)
-    print(orig)
+    print("".join(orig))
 
                 
 
