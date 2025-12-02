@@ -4,6 +4,7 @@ def process(code, reg_a = 0):
     registers = {"a": reg_a, "b": 0, "c": 1, "d": 0}
     func_pointer = 0
     while func_pointer < len(code):
+        print(func_pointer)
         instruction = code[func_pointer]
         if "cpy" in instruction:
             val = instruction.split(" ")[1]
